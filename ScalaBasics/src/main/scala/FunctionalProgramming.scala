@@ -150,4 +150,62 @@ object FunctionalProgramming extends App{
     println("This is a code block")
     9
   })
+
+  // My while loop
+  def myWhile(condition: =>Boolean): (=>Unit)=>Unit = {
+    def doLoop(op: =>Unit): Unit = {
+      if (condition){
+        op
+        myWhile(condition)(op)
+      }
+    }
+    doLoop _
+  }
+
+  var n = 10
+  myWhile(n >= 1){
+    println(n)
+    n -= 1
+  }
+
+  def myWhile2(condition: => Boolean): (=> Unit) => Unit = {
+    op => {
+      if (condition) {
+        op
+        myWhile2(condition)(op)
+      }
+    }
+  }
+
+  var m = 10
+  myWhile2(m >= 1) {
+    println(m)
+    m -= 1
+  }
+
+  def myWhile3(condition: => Boolean)(op: =>Unit): Unit = {
+    if (condition) {
+      op
+      myWhile2(condition)(op)
+    }
+  }
+
+  var k = 10
+  myWhile3(k >= 1) {
+    println(k)
+    k -= 1
+  }
+
+
+  // Lazy
+  lazy val result = sum(13, 17)
+
+  println("1. function called")
+  println("3. result = " + result)
+
+  def sum(a: Int, b: Int): Int = {
+    println("2. sum called")
+    a + b
+  }
+
 }
