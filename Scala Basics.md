@@ -713,4 +713,59 @@ f8({
 }) // This is a code block a:9 This is a code block a:9
 ```
 
-> `=>Int`是一个返回值为`Int`类型的代码块, 其和`Int`, `Int=>Int`一样都属于返回值类型. `f7`会被调用两次, 因为`f7`相当于是作为参数`a`传入了`f8`, `f7`调用多少次取决于`f8`中`a`调用了多少次. 我们也可以直接传入一个返回值为`Int`的代码块.
+> `=>Int`是一个返回值为`Int`类型的代码块, 其和`Int`, `Int=>Int`一样都属于返回值类型. `f7`会被调用两次, 因为`f7`相当于是作为参数`a`传入了`f8`, `f7`调用多少次取决于`f8`中`a`调用了多少次. 我们也可以直接传入一个返回值为`Int`的代码块.           
+
+案例: 实现While循环功能
+
+```Scala
+// My while loop
+def myWhile(condition: =>Boolean): (=>Unit)=>Unit = {
+  def doLoop(op: =>Unit): Unit = {
+    if (condition){
+      op
+      myWhile(condition)(op)
+    }
+  }
+  doLoop _
+}
+var n = 10
+myWhile(n >= 1){
+  println(n)
+  n -= 1
+}
+```
+
+我们可以使用柯里化来简化:
+
+```Scala
+def myWhileCurrying(condition: => Boolean)(op: =>Unit): Unit = {
+  if (condition) {
+    op
+    myWhileCurrying(condition)(op)
+  }
+}
+var k = 10
+myWhileCurrying(k >= 1) {
+  println(k)
+  k -= 1
+```
+
+## 惰性加载
+
+当函数返回值被声明为lazy时, 函数的执行将会被推迟, 直到我们首次对此取值, 该函数才会执行.
+
+```Scala
+// Lazy
+lazy val result = sum(13, 17)
+
+println("1. function called")
+println("3. result = " + result)
+
+def sum(a: Int, b: Int): Int = {
+  println("2. sum called")
+  a + b
+}
+// 1. function called
+// 2. sum called
+// 3. result = 30
+```
