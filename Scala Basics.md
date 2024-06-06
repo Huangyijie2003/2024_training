@@ -4,7 +4,7 @@ Github仓库地址:https://github.com/Huangyijie2003/2024_training
 
 ## Scala Type Hierarchy and Data Type
 
-![img](https://h1mrfl4covt.feishu.cn/space/api/box/stream/download/asynccode/?code=ZWJhMmY0Yzg5MjYyMzFhOWI3ODZlMDQ4NDllMTcwZWJfVjUwOGhNMk4zUDlvRnY4aGJnY2sybTA0RGh6b3h6c3NfVG9rZW46Wk41MWJnUHp5b3lHdVJ4OVlVU2NSdEFQbk9mXzE3MTczMzgwMTk6MTcxNzM0MTYxOV9WNA)
+![img](https://h1mrfl4covt.feishu.cn/space/api/box/stream/download/asynccode/?code=MWNjZWZkZTNkYzVhZmY2MzU0Y2ZiM2Q1YmQ1ZTZjYmRfTHB4VFBHbUxNRWNuUWJvejIwRU04RGRnVGJrSjJYMW5fVG9rZW46Wk41MWJnUHp5b3lHdVJ4OVlVU2NSdEFQbk9mXzE3MTc2NjA5NzE6MTcxNzY2NDU3MV9WNA)
 
 Any是scala中所有类型的父型, scala中一切数据都是对象, 不管是值类型还是引用类型. 
 
@@ -14,7 +14,7 @@ Any是scala中所有类型的父型, scala中一切数据都是对象, 不管是
 
 AnyVal包含基础的数据类型, Scala遵守低精度的类型向高精度的类型进行自动转换(隐式转换).
 
-![img](https://h1mrfl4covt.feishu.cn/space/api/box/stream/download/asynccode/?code=YmZjOTZhYzZiMmZlZmQ0N2ZjOTFiMTI0ODYzMDE4MGVfcjY4UlpENU9tV1ZPTVRVNGp1bWFsbFdITm9yZ1pHOEdfVG9rZW46VkY2NWJoWGtmb0g0NGF4OHc2TmN2OGh3bkllXzE3MTczMzgwMTk6MTcxNzM0MTYxOV9WNA)
+![img](https://h1mrfl4covt.feishu.cn/space/api/box/stream/download/asynccode/?code=YzhhY2I0ZDNiOTJiMjdlOTczYWFhNzVlYjRiMWNjNGFfYVFXcmZ0U09IZTQxV3NiOHpianhlOXFMY1BndDlPQmVfVG9rZW46VkY2NWJoWGtmb0g0NGF4OHc2TmN2OGh3bkllXzE3MTc2NjA5NzE6MTcxNzY2NDU3MV9WNA)
 
 上图为类型转换时的默认规则,注意Char会直接转成Int类型.
 
@@ -104,7 +104,7 @@ var str = s"The answer is $myVariableVal" // The answer is 10
 
 代码块的作用:
 
-**定义作用域:** 代码块内定义的变量只在该代码块内有效.
+**定义****作用域****:** 代码块内定义的变量只在该代码块内有效.
 
 **计算表达式的值:** 代码块的最后一个表达式的值是整个代码块的值.
 
@@ -410,7 +410,7 @@ f1(100) // 100
 
 > 适用于第一个参数有默认值时, 可直接显式命名以传入第二个参数的值.
 
-## **匿名函数再述**
+## **匿名函数****再述**
 
 之前提到的匿名函数:`(`*`x`*`: `*`Int`*`) => `*`x `*`+ 1`,  我们可以用一个变量来命名这个函数:
 
@@ -713,7 +713,7 @@ f8({
 }) // This is a code block a:9 This is a code block a:9
 ```
 
-> `=>Int`是一个返回值为`Int`类型的代码块, 其和`Int`, `Int=>Int`一样都属于返回值类型. `f7`会被调用两次, 因为`f7`相当于是作为参数`a`传入了`f8`, `f7`调用多少次取决于`f8`中`a`调用了多少次. 我们也可以直接传入一个返回值为`Int`的代码块.           
+> `=>Int`是一个返回值为`Int`类型的代码块, 其和`Int`, `Int=>Int`一样都属于返回值类型. `f7`会被调用两次, 因为`f7`相当于是作为参数`a`传入了`f8`, `f7`调用多少次取决于`f8`中`a`调用了多少次. 我们也可以直接传入一个返回值为`Int`的代码块.
 
 案例: 实现While循环功能
 
@@ -768,4 +768,503 @@ def sum(a: Int, b: Int): Int = {
 // 1. function called
 // 2. sum called
 // 3. result = 30
+```
+
+# OOP
+
+## Scala 包
+
+基本语法
+
+```Scala
+package 包名
+```
+
+三大作用
+
+1. 区分相同名字的类
+2. 当类很多时, 可以很好的管理类
+3. 控制访问范围
+
+scala中的两种包管理方式:
+
+1. Java风格, 每个源文件声明一个包, 写在源文件最上方. 但源文件位置不需要和包名目录层级一致, 只代表逻辑层级关系, 不像java一样源文件也必须按照包名目录层级关系放置. 当然惯例是和java一样按照包名目录层级来放置.
+2. 用`{}`嵌套风格定义包：
+
+```Scala
+package com {
+    // code in com packageobject Outer {
+        var name = "Outer"
+    }
+    package inner {
+        // code in com.inner packagepackage scala {
+            // code in com.innner.scala packageobject Inner {
+                def main(args: Array[String]):Unit = {
+                    println(Outer.name)
+                    Outer.name = "Inner"
+                    println(Outer.name)
+                }
+            }
+        }
+    }
+} 
+```
+
+> 第二种风格的特点:
+>
+> - 一个源文件可以声明多个并列的最顶层的包.
+> - 子包中的类可以访问父包中的内容, 无需导入. 但外层是不能直接访问内层的, 需要导入.
+
+包对象:
+
+- 为scala包定义一个同名的单例包对象, 定义在包对象中的成员, 作为其对应包下的所有类和对象的共享变量, 可以被直接访问, 无需导入.
+- 关键字`package object`, 需要和包在同一层级下. 比如为`com.inner`包定义包对象的话, 必须在`com`包中, 定义形式`package obejct inner { ... }`.
+
+包的导入:
+
+```Scala
+import users._      // 导入包 users 中的所有成员
+import users.User   // 导入类 User
+import users.{User, UserPreferences}      // 仅导入选择的成员
+import users.{UserPreferences => UPrefs}  // 导入类并且设置别名
+import users.{User => _, _}               // 导入出User类以外的所有users包中的内容
+```
+
+- 可以在任意位置导入(作用于代码块), 可以设置别名, 可以选择性导入想要导入的内容, 可以屏蔽某个类.
+- 所有scala源文件默认导入:
+
+```Scala
+import java.lang._
+import scala._
+import scala.Predef._
+```
+
+## 面向对象
+
+### 封装
+
+封装就是把抽象出的数据和对数据的操作封装在一起, 数据被保护在内部, 程序的其它部分只有通过被授权的操作(成员方法), 才能对数据进行操作. Java 封装操作如下:
+
+1. 将属性进行私有化
+2. 提供一个公共的`set`方法, 用于对属性赋值.
+3. 提供一个公共的`get`方法, 用于获取属性的值.
+
+Scala中的 public 属性, 底层实际为 private, 并通过`get`方法(`obj.field()`)和`set`方法
+
+`obj.field_=(value)`对其进行操作. 所以 Scala 并不推荐将属性设为private, 再为其设置public的`get`和`set`方法的做法. 但由于很多Java 框架都利用反射调用getXXX和setXXX方法, 有时候为了和这些框架兼容, 也会为Scala 的属性设置getXXX和setXXX方法(通过`@BeanProperty`注解实现).
+
+#### 访问权限
+
+- Java中`private protected public`和默认包访问权限.
+- scala中属性和方法默认公有, 并且不提供`public`关键字.
+- `private`私有, 类内部和伴生对象内可用.
+- `protected`保护权限, scala中比java中严格, 只有同类, 子类可访问, 同包无法访问. (因为java中说实话有点奇怪)
+- `private [pacakgeName]`增加包访问权限, 在包内可以访问.
+
+#### 构造器
+
+就是Scala中的构造方法. 包括主构造器和辅助构造器. 
+
+```Scala
+object Constructor {
+    def main(args: Array[String]): Unit = {
+        val p: Person = new Person()
+        p.Person() // call main constructor
+
+        val p1 = new Person("alice")
+        val p2 = new Person("bob", 25)
+        p1.Person()
+    }
+}
+class Person {
+    var name: String = _
+    var age: Int = _
+    println("call main construtor")
+
+    def this(name: String) {
+        this()
+        println("call assist constructor 1")
+        this.name = name
+        println(s"Person: $name $age")
+    }
+
+    def this(name: String, age: Int) {
+        this(name)
+        this.age = age
+        println("call assist constructor 2")
+        println(s"Person: $name $age")
+    }
+
+    // Just a common method, not constructor
+    def Person(): Unit = {
+        println("call Person.Person() method")
+    }
+}
+```
+
+- 特点:
+  - 主构造器写在类定义上, 一定是构造时最先被调用的构造器, 方法体就是类定义, 可以在类中方法定义的同级编写逻辑, 都是主构造器一部分, 按顺序执行.
+  - 辅助构造器用`this`定义.
+  - 辅助构造器必须直接或者间接调用主构造器, 调用其他构造必须位于第一行.
+  - 主构造器和辅助构造器是重载的方法, 所以参数列表不能一致.
+  - 可以定义和类名同名方法, 就是一个普通方法.
+- 主构造器中形参三种形式: 不使用任何修饰, `var`修饰, `val`修饰。
+  - 不使用任何修饰那就是一个形参(局部变量), 但此时在类内都可以访问到这个变量. 逻辑上不是一个成员(报错信息这么写), 但是可以访问. WTF???
+  - 使用`var val`修饰那就是定义为类成员, 分别是变量和常量, 不需要也不能在类内再定义一个同名字段. 调用时传入参数就直接给到该成员, 不需要再显式赋值.
+  - 主构造器中的`var val`成员也可以添加访问修饰符.
+  - 不加参数列表相当于为空, `()`可以省略.
+  - 主构造器的访问修饰符添加到参数列表`()`前.
+- 实践指南：
+  - 推荐使用scala风格的主构造器`var val`修饰参数的编写方法, 而不要被Java毒害!
+  - 如果需要多种重载的构造器那么就添加新的的辅助构造器.
+
+```Scala
+class Person(private var name: String) {
+    var age: Int = _
+    println("call main construtor")
+
+    def this(name: String, age: Int) = {
+        this(name)
+        this.age = age
+        println("call assist constructor 2")
+        println(s"Person: $name $age")
+    }
+
+    // J ust a common method, not constructor
+    def Person(): Unit = {
+        println("call Person.Person() method")
+    }
+}
+```
+
+### 继承
+
+- `class ChildClassName[(argList1)] extends BaseClassName[(args)] { body }`
+- 子类继承父类属性和方法。
+- 可以调用父类构造器, 但感觉好像很局限, 子类中只可能调用到主构造或者辅助构造中的其中一个构造器. 那如果父类有多种构造方式, 子类想继承也没有办法? 只能是其中一种.
+
+### 多态
+
+- java中属性静态绑定, 根据变量的引用类型确定, 方法是动态绑定.
+- 但scala中**属性和方法都是动态绑定.** 就属性而言, 其实也不应该在子类和父类中定义同名字段.
+- 同java一样, 所有实例方法都是虚方法, 都可以被子类覆写.
+- `override`关键字覆写.
+- scala中**属性（字段）也可以被重写,** 加`override`关键字.
+
+### 抽象类
+
+- `abstract calss ClassName`
+- 抽象属性: `val/var name: Type`, 不给定初始值.
+- 抽象方法: `def methodName(): RetType`, 只声明不实现.
+- 子类如果没有覆写全部父类未定义的属性和方法, 那么就必须定义为抽象类. 老生常谈了.
+- 重写非抽象方法属性必须加`override`, 重写抽象方法则可以不加`override`.
+- 子类调用父类中方法使用`super`关键字.
+- 子类重写父类抽象属性, 父类抽象属性可以用`var`修饰, `val var`都可以. 因为父类没有实现嘛, 需要到子类中来实现.
+- 如果是**重写非抽象属性,** 则父类非抽象属性只支持`val`, 不支持`var`. 因为`var`修饰为可变量, 子类继承后可以直接使用修改, 没有必要重写. `val`不可变才有必要重写.
+
+```Scala
+abstract class Person2 {
+
+  // 非抽象属性
+  val name: String = ""
+
+  // 抽象属性
+  var age: Int
+
+  // 非抽象方法
+  def eat(): Unit = {
+    println("Eating!")
+  }
+
+  // 抽象方法
+  def sleep(): Unit
+}
+
+class Student2 extends Person2{
+  var age = 18
+
+  override def sleep(): Unit = {
+    println("Sleeping!")
+  }
+
+  override val name: String = "Student"
+
+  override def eat(): Unit = {
+    super.eat() // 使用super关键字来调用父类中的方法
+    println("Eat method overrides!")
+  }
+
+}
+```
+
+### 匿名子类
+
+- 和java如出一辙. 重写所有抽象字段和方法.
+
+```Scala
+val person2: Person2 = new Person2 {
+  override var age: Int = 18
+
+  override def sleep(): Unit = {
+    println("This is the anonymous class")
+  }
+}
+
+person2.sleep() // This is the anonymous class
+person2.eat() // Eating!
+```
+
+### 单例对象(伴生对象)
+
+- 取代`static`语义.
+- 编译后其实会生成两个类, 伴生对象是伴生类(类名为对应类后加`$`符号)的单例对象.
+
+```Scala
+class Student3(val name: String, val age: Int){
+  def printInfo(): Unit = {
+    println(s"Name: $name, age: $age, school: ${Student3.school}")
+  }
+}
+
+object Student3 {
+  var school: String = "CUG" // 伴生对象里的属性可以当成静态属性来用
+}
+
+val student3 = new Student3("Jon",21)
+student3.printInfo()
+```
+
+- `obejct`, 名称和类一致, 必须放同一个文件, 前面已经说过了.
+- 常见用法: 构造器私有化, 用伴生对象中的工厂方法(Factory Method Pattern). 和静态工厂方法使用起来也没有什么区别. 
+
+```Scala
+class Student3 private(val name: String, val age: Int){
+  def printInfo(): Unit = {
+    println(s"Name: $name, age: $age, school: ${Student3.school}")
+  }
+}
+
+object Student3 {
+  var school: String = "CUG" // 伴生对象里的属性可以当成静态属性来用
+
+  def newStudent(name: String, age: Int): Student3 = new Student3(name, age)
+}
+
+val student3 = Student3.newStudent("Jon", 21)
+
+student3.printInfo() // Name: Jon, age: 21, school: CUG
+```
+
+- 伴生对象实现`apply`方法后调用时可以省略`.apply`, 直接使用`className(args)`. 库中很多这种用法创建实例, 是一个语法糖(Syntactic Sugar).
+
+```Scala
+class Student3 private(val name: String, val age: Int){
+  def printInfo(): Unit = {
+    println(s"Name: $name, age: $age, school: ${Student3.school}")
+  }
+}
+
+object Student3 {
+  var school: String = "CUG" // 伴生对象里的属性可以当成静态属性来用
+
+  def apply(name: String, age: Int): Student3 = new Student3(name, age)
+}
+
+val student3 = Student3("Jon", 21) // Student3.apply("Jon", 21)
+
+student3.printInfo()
+```
+
+- 测试伴生对象时就在该对象内定义`main`函数编译时会出现的奇怪的访问权限问题. 可能对包含入口的伴生对象做了特殊处理, 具体细节尚不清楚. 最好将`main`定义在单独的伴生对象内.
+- 一个简单的单例设计模式:
+
+```Scala
+class Singleton private() {
+  def doSomething(): Unit = {
+    println("Doing something in a more controlled singleton instance...")
+  }
+}
+
+// 饿汉式单例设计模式
+object Singleton {
+  private val instance = new Singleton()
+
+  def getInstance: Singleton = instance
+}
+
+// 懒汉式单例设计模式
+//  object Singleton {
+//    private var instance: Singleton = _
+//
+//    def getInstance(): Singleton = {
+//      if (instance == null){
+//        instance = new Singleton()
+//      }
+//      instance
+//    }
+//
+//  }
+
+val singleton = Singleton.getInstance
+singleton.doSomething() // 输出 "Doing something in a more controlled singleton instance..."
+
+val singleton2 = Singleton.getInstance
+singleton2.doSomething()
+
+println(singleton) // OOP$Singleton@6bf256fa
+println(singleton2) // OOP$Singleton@6bf256fa (只能有一个对象实例, 因此引用地址完全一样)
+```
+
+> 单例设计模式(Singleton Design Pattern)是一种创建型设计模式, 其主要目的是确保一个类在整个程序运行期间只有一个实例, 并提供一个全局的访问点. 这种模式常用于需要全局共享资源的场景, 如配置管理, 日志记录, 线程池等.
+
+### 特质(Trait)
+
+Scala中采用特质Trait来代替接口的概念, 也就是说, 多个类具有相同的特质时, 就可以将这个特质独立出来, 采用关键字`trait`声明. 
+
+- 替代java接口的概念. 但比接口更为灵活, 一种实现多继承的手段.
+- 多个类具有相同的特征时, 就可以将这个特征提取出来, 用继承的方式来复用.
+- 用关键字`trait`声明.
+
+```Scala
+class Person4 {
+  val name: String = "person"
+  var age: Int = 18
+  def sayHello():Unit = {
+    println("Hello from: " + name)
+  }
+}
+
+// 定义一个特质
+trait Young {
+  // 定义一个抽象属性
+  var age: Int
+  // 定义一个非抽象属性
+  val name: String = "Young"
+
+  // 声明非抽象方法
+  def play(): Unit = {
+    println(s"Young people $name is playing")
+  }
+  // 声明抽象方法
+  def dating(): Unit
+}
+
+class Student4 extends Person4 with Young {
+  // 重写冲突的属性name, 不然会报错
+  override val name: String = "Jon"
+  // 实现抽象方法
+  override def dating(): Unit = {
+    println(s"Student $name is dating")
+  }
+  // 定义类特有的方法
+  def study(): Unit = {
+    println(s"$name is studying")
+  }
+
+  //重写父类方法
+  override def sayHello(): Unit = {
+    super.sayHello()
+    println(s"Hello from student $name")
+  }
+}
+
+val student4 = new Student4
+student4.sayHello() //Hello from: Jon Hello from student Jon
+student4.study() // Jon is studying
+student4.play() // Young people Jon is playing
+student4.dating() // Student Jon is dating
+```
+
+- 匿名子类也可以引入特征:
+
+```Scala
+trait Talent {
+  def singing(): Unit
+  def dancing(): Unit
+}
+// 动态混入
+val studentWithTalent = new Student4 with Talent {
+  override def singing(): Unit = {
+    println(s"$name is singing")
+  }
+
+  override def dancing(): Unit = {
+    println(s"$name is dancing")
+  }
+}
+
+studentWithTalent.singing() // Jon is singing
+```
+
+- 特征和基类或者多个特征中重名的属性或方法需要在子类中覆写以解决冲突, 最后因为动态绑定, 所有使用的地方都是子类的字段或方法. 属性的话需要类型一致, 不然提示不兼容. 方法的话参数列表不一致会视为重载而不是冲突.
+- 如果基类和特征中的属性或方法一个是抽象的, 一个非抽象, 且兼容, 那么可以不覆写. 很直观, 就是不能冲突不能二义就行.
+- 多个特征和基类定义了同名方法的, 就需要在子类重写解决冲突. 其中可以调用父类和特征的方法, 此时`super.methodName`指代按照顺序最后一个拥有该方法定义的特征或基类. 也可以用`super[baseClassOrTraitName].methodName`直接指代某个基类的方法, 注意需要是直接基类, 间接基类则不行.
+- 也就是说基类和特征基本是同等地位.
+- 其实特征的多继承和C++的多继承已经很像了, 只是名称冲突的解决方式不一样, 菱形继承的解决方式也不一样, 而且不能访问间接基类.
+- scala**单****继承****多实现,** 实现体现在特征上. 基类主要用于一个对象比较核心比较本质的部分上.
+- **继承****特征与类的区别:** 特征构造时不能给参数. 其他都是同样的, 都可以实现多态.
+
+### 自类型(Self Type)
+
+- 可实现**依赖注入**的功能.
+- 一个类或者特征指定了自身类型的话, 它的对象和子类对象就会拥有这个自身类型中的所有属性和方法.
+- 是将一个类或者特征插入到另一个类或者特征中, 属性和方法都就像直接复制插入过来一样, 能直接使用. 但不是继承, 不能用多态.
+- 语法, 在类或特征中:`_: SelfType =>`, 其中`_`的位置是别名定义, 也可以是其他, `_`指代`this`. 插入后就可以用`this.xxx`来访问自身类型中的属性和方法了.
+- 注入进来的目的是让你能够使用, 可见, 提前使用应该拥有的属性和方法. 最终只要自身类型和注入目标类型同时被继承就能够得到定义了.
+
+```Scala
+class User(val name: String, val password: String)
+
+trait UserDao {
+  _: User =>
+
+  def insert(): Unit = {
+    println(s"Insert into database: ${this.name}")
+  }
+}
+
+class RegisterUser(name:String, password:String) extends User(name, password) with UserDao
+
+val user = new RegisterUser(name="Jon", password="123456")
+
+user.insert()
+```
+
+### 类型检查和转换
+
+运行时类型识别RTTI:
+
+- 判断类型: `obj.isInstanceOf[T]`, 确切匹配的类型或者父类都返回true.
+- 转换类型: `obj.asInstance[T]`, 转换为目标类型.
+- 获取类名: `classOf[T]`, 得到类对应的`Class`对象`Class[T]`, 转字符串结果是`class package.xxx.className`.
+- 获取对象的类: `obj.getClass`
+
+### 枚举类
+
+- 继承`Enumeration`.
+- 用`Value`类型定义枚举值.
+
+```Scala
+object WorkDay extends Enumeration {
+    val MONDAY = Value(1, "Monday")
+    val TUESDAY = Value(2, "Tuesday")
+    val THURSDAy = Value(3, "Thrusday")
+}
+
+object EnumClass {
+    def main(args: Array[String]): Unit = {
+        println(WorkDay.MONDAY)
+        println(WorkDay.TUESDAY)
+    }
+}
+```
+
+### 应用类
+
+- 继承`App`, 包装了`main`方法, 就不需要显式定义`main`方法了, 可以直接执行.
+
+```Scala
+object TestApp extends App {
+    println("hello,world!")
+}
 ```
