@@ -119,7 +119,7 @@ object CollectionCalculation extends App{
   println(groupedList) // Map(world -> List(world), flink -> List(flink), spark -> List(spark), scala -> List(scala, scala, scala), from -> List(from, from), hello -> List(hello, hello, hello, hello, hello))
 
   // 对分组之后的list取长度, 得到每个单词的个数
-  val countList = groupedList.map((kv) => (kv._1, kv._2.length))
+  val countList = groupedList.map(kv => (kv._1, kv._2.length))
   println(countList) // Map(world -> 1, flink -> 1, spark -> 1, scala -> 3, from -> 2, hello -> 5)
 
   // 排序
