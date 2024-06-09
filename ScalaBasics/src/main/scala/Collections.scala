@@ -237,4 +237,34 @@ object Collections extends App{
   for(elem <- tuple.productIterator) {
     println(elem)
   }
+
+  // Option
+  val myMap: Map[String, String] = Map("key1" -> "value")
+  val value1: Option[String] = myMap.get("key1")
+  val value2: Option[String] = myMap.get("key2")
+
+  println(value1) // Some("value1")
+  println(value2) // None
+
+  def show(x: Option[String]) = x match {
+    case Some(s) => s
+    case None => "?"
+  }
+
+  val sites = Map("a" -> "This is a", "b" -> "This is b")
+
+  println(show(sites.get("a"))) // This is a
+  println(show(sites.get("c"))) // ?
+
+  val a: Option[Int] = Some(5)
+  val b: Option[Int] = None
+
+  println("a.getOrElse(0): " + a.getOrElse(0))
+  println("b.getOrElse(10): " + b.getOrElse(10))
+
+  val c: Option[Int] = Some(5)
+  val d: Option[Int] = None
+
+  println("c.isEmpty: " + c.isEmpty)
+  println("d.isEmpty: " + d.isEmpty)
 }
