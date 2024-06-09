@@ -1,4 +1,4 @@
-object PatternMatchBasics extends App{
+object PatternMatch extends App{
   val x: Int = 2
   val y: String = x match {
     case 1 => "one"
@@ -102,4 +102,53 @@ object PatternMatchBasics extends App{
     }
     println(result)
   }
+
+  // 变量声明时匹配
+  val List(first, second, _*) = List(12, 34, 523, 34)
+  println(first) // 12
+  println(second) // 34
+
+  val fir :: sec :: rest = List(23, 43, 43, 23, 13, 433)
+  println(fir) // 23
+  println(sec) // 43
+  println(rest) // List(43, 23, 13, 433)
+
+  // 匹配对象
+  class Student(val name: String, val age: Int)
+
+  object Student {
+    def apply(name: String, age: Int): Student = new Student(name, age)
+
+    // 必须实现一个unapply方法, 用来对对象属性进行拆解
+    def unapply(student: Student): Option[(String, Int)] = {
+      if (student == null){
+        None
+      } else {
+        Some((student.name, student.age))
+      }
+    }
+  }
+
+  val student = new Student("Jon", 21)
+
+  val result = student match {
+    case Student("Jon", 21) => "Jon, 21"
+    case _ => "something else"
+  }
+
+  println(result)
+
+  // case class
+  case class Person(name: String, age: Int)
+
+  val person = Person("Jon", 21)
+
+  val result2 = person match {
+    case Person("Jon", 21) => "Jon, 21"
+    case _ => "something else"
+  }
+
+  println(result2)
+
+
 }
