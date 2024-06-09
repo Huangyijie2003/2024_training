@@ -4,7 +4,7 @@ Github仓库地址:https://github.com/Huangyijie2003/2024_training
 
 ## Scala Type Hierarchy and Data Type
 
-![img](https://h1mrfl4covt.feishu.cn/space/api/box/stream/download/asynccode/?code=NjgxMzdmYjE3OGNjNWQyZjlmMDUwMWY5YmJjZjAwMTVfSjRPRmdOUld0ejVDUXpKUzZLMlBReVNKZ29FWXg1Wk1fVG9rZW46Wk41MWJnUHp5b3lHdVJ4OVlVU2NSdEFQbk9mXzE3MTc4MzQ1OTg6MTcxNzgzODE5OF9WNA)
+![img](https://h1mrfl4covt.feishu.cn/space/api/box/stream/download/asynccode/?code=NjMxZmY3ZmY4OGFhYjdiYTA4NWMyMDgwMjMwOTQzOWVfU0lSVERleHBjSEIyR3JjWkhGaUgwbzhHZ2RydHRXZUlfVG9rZW46Wk41MWJnUHp5b3lHdVJ4OVlVU2NSdEFQbk9mXzE3MTc5MDU4MzE6MTcxNzkwOTQzMV9WNA)
 
 Any是scala中所有类型的父型, scala中一切数据都是对象, 不管是值类型还是引用类型. 
 
@@ -14,7 +14,7 @@ Any是scala中所有类型的父型, scala中一切数据都是对象, 不管是
 
 AnyVal包含基础的数据类型, Scala遵守低精度的类型向高精度的类型进行自动转换(隐式转换).
 
-![img](https://h1mrfl4covt.feishu.cn/space/api/box/stream/download/asynccode/?code=YzA3ZjE2NDQ4YWE0ZDQxNTk2MzVhZmZlNzQ1ZTMzZjJfbzg0RXJPTjJ0STdSV1FxY1R6eDNuR1Nnd0pNNHRZa0FfVG9rZW46VkY2NWJoWGtmb0g0NGF4OHc2TmN2OGh3bkllXzE3MTc4MzQ1OTg6MTcxNzgzODE5OF9WNA)
+![img](https://h1mrfl4covt.feishu.cn/space/api/box/stream/download/asynccode/?code=YjRlYTM5NWY5ZDU1ZmM4NTUwYTM4NWY2MDQ0YmRkNTdfQklYeEtLOXFsWWViWEZqNTZjZUNRZE1YT3ptaEh1bmFfVG9rZW46VkY2NWJoWGtmb0g0NGF4OHc2TmN2OGh3bkllXzE3MTc5MDU4MzE6MTcxNzkwOTQzMV9WNA)
 
 上图为类型转换时的默认规则,注意Char会直接转成Int类型.
 
@@ -1734,4 +1734,244 @@ println(countList) // Map(world -> 1, flink -> 1, spark -> 1, scala -> 3, from -
 // 排序
 val sortList: List[(String, Int)] = countList.toList.sortWith(_._2 > _._2).take(3) // 降序排序, 取前三个
 println(sortList) // List((hello,5), (scala,3), (from,2))
+```
+
+## Option
+
+Option是Scala中的一个重要概念, 用于表示可能存在或可能不存在的值. Option[T] 是一个类型为 T 的可选值的容器: 如果值存在, Option[T] 就是一个 Some[T], 如果不存在, Option[T] 就是对象 None.
+
+```Scala
+// Option
+val myMap: Map[String, String] = Map("key1" -> "value")
+val value1: Option[String] = myMap.get("key1")
+val value2: Option[String] = myMap.get("key2")
+
+println(value1) // Some("value1")
+println(value2) // None
+```
+
+在上面的代码中, `myMap` 一个是一个 Key 的类型是 String, Value 的类型是 String 的 hash map, 但不一样的是他的 `get()`返回的是一个叫 `Option[String]` 的类别。
+
+Scala 使用 `Option[String]`来告诉你:「我会想办法回传一个 String，但也可能没有 String 给你」.
+
+- 通过模式匹配来输出匹配值:
+
+```Scala
+def show(x: Option[String]) = x match {
+  case Some(s) => s
+  case None => "?"
+}
+
+val sites = Map("a" -> "This is a", "b" -> "This is b")
+
+println(show(sites.get("a"))) // This is a
+println(show(sites.get("c"))) // ?
+```
+
+- 使用 `getOrElse()`方法来获取元组中存在的元素或者使用其默认的值:
+
+```Scala
+val a: Option[Int] = Some(5)
+val b: Option[Int] = None
+
+println("a.getOrElse(0): " + a.getOrElse(0)) // 5
+println("b.getOrElse(10): " + b.getOrElse(10)) // 10
+```
+
+> 如果a中有值(即Some(5)), 则返回该值5; 如果a中没有值(即None), 则返回默认值0.
+
+- 使用 `isEmpty()`方法来检测元组中的元素是否为 None
+
+```Scala
+val c: Option[Int] = Some(5)
+val d: Option[Int] = None
+
+println("c.isEmpty: " + c.isEmpty) // false
+println("d.isEmpty: " + d.isEmpty) // true
+```
+
+# 模式匹配
+
+- 用于替代传统C/C++/Java的`switch-case`结构, 但补充了更多功能, 拥有更强的能力.
+- 语法:
+
+```Scala
+value match {
+    case caseVal1 => returnVal1
+    case caseVal2 => returnVal2
+    ...
+    case _ => defaultVal
+}
+```
+
+## 类型匹配
+
+```Scala
+def describeType(x: Any) = x match {
+  case i: Int => "Int " + i
+  case s: String => "String " + s
+  case list: List[String] => "List " + list
+  case array: Array[Int] => "Array[Int] " + array
+  case a => "Something else " + a
+}
+
+println(describeType(20)) // match
+println(describeType("hello")) // match
+println(describeType(List("hi", "hello"))) // match
+println(describeType(List(20, 30))) // match
+println(describeType(Array(10, 20))) // match
+println(describeType(Array("hello", "yes"))) // not match
+println(describeType((10, 20))) // not match
+```
+
+## 数组匹配
+
+```Scala
+// 匹配数组
+for (arr <- List(
+  Array(0),
+  Array(1, 0),
+  Array(1, 1, 0),
+  Array(10, 2, 7, 5),
+  Array("hello", 20, 50)
+)) {
+  val result = arr match {
+    case Array(0) => "0"
+    case Array(1, 0) => "Array(1, 0)"
+    case Array(x: Int, y: Int) => s"Array($x, $y)" // Array of two elements
+    case Array(0, _*) => s"an array begin with 0"
+    case Array(_, 1, _) => s"an array with three elements, no.2 is 1"
+    case Array(_: String, _*) => s"array that first element is a string"
+    case _ => "something else"
+  }
+  println(result) 
+  /*
+    0
+    Array(1, 0)
+    an array with three elements, no.2 is 1
+    something else
+    array that first element is a string
+    */
+}
+```
+
+## 列表匹配
+
+`List`匹配和`Array`差不多, 也很灵活. 还可用集合类灵活的运算符来匹配. 比如使用`::`运算符匹配`first :: second :: rest`, 将一个列表拆成三份, 第一个第二个元素和剩余元素构成的列表.
+
+```Scala
+// :: 号进行匹配
+val list = List(1, 2, 5, 7, 24)
+
+list match {
+  case first :: second :: rest => println(s"first: $first, second: $second, rest: $rest")
+  case _ => println("something else")
+} // first: 1, second: 2, rest: List(5, 7, 24)
+```
+
+## 元组匹配
+
+可以匹配n元组, 匹配元素类型, 匹配元素值. 如果只关心某个元素, 其他就可以用通配符或变量. 元组大小固定, 所以不能用`_*`.
+
+```Scala
+// 匹配元组
+for (tuple <- List(
+  (0,1),
+  (0,0),
+  ("hello", true),
+  (0.5, 6),
+  (1, 23, 4),
+  ("hello world", 1, true)
+)) {
+  val result = tuple match {
+    case (a, b) => a + ", " + b
+    case (0, _) => "(0, _)"
+    case (a, 1, _) => "(a,1,_)" + a
+    case _ => "something else"
+  }
+  println(result)
+  /*
+  0, 1
+  0, 0
+  hello, true
+  0.5, 6
+  something else
+  (a,1,_)hello world
+  */
+}
+```
+
+## 变量声明时匹配
+
+```Scala
+// 变量声明时匹配
+val List(first, second, _*) = List(12, 34, 523, 34)
+println(first) // 12
+println(second) // 34
+
+val fir :: sec :: rest = List(23, 43, 43, 23, 13, 433)
+println(fir) // 23
+println(sec) // 43
+println(rest) // List(43, 23, 13, 433)
+```
+
+## for推导式中匹配
+
+- 元组中取元素时, 必须用`_1 _2 ...`, 可以用元组赋值将元素赋给变量, 更清晰一些.
+- 类似于python的多返回值`for ((first, second) <- tupleList)`
+- 可以不考虑某个位置的变量, 只遍历key或者value`for ((first, _) <- tupleList)`
+- 指定特定元素的值, 可以实现类似于循环守卫的功能, 相当于加一层筛选. 比如`for ((10, second) <- tupleList)`(只看元组第一个值是10的情况)
+- 其他匹配也同样可以用, 可以关注数量, 值, 类型等, 相当于做了筛选.
+- 元组列表匹配, 赋值匹配, `for`循环中匹配非常灵活, 灵活运用可以提高代码可读性.
+
+## 匹配对象和case class
+
+- 对象内容匹配.
+- 直接`match-case`中匹配对应引用变量的话语法是有问题的. 编译报错信息提示: 不是样例类也没有一个合法的`unapply/unapplySeq`成员实现.
+- 在样例类中使用`var`也是可以的, 但并不推荐这样.
+- 要匹配对象, 需要实现伴生对象`unapply`方法, 用来对对象属性进行拆解以做匹配.
+
+```Scala
+// 匹配对象
+class Student(val name: String, val age: Int)
+
+object Student {
+  def apply(name: String, age: Int): Student = new Student(name, age)
+
+  // 必须实现一个unapply方法, 用来对对象属性进行拆解
+  def unapply(student: Student): Option[(String, Int)] = {
+    if (student == null){
+      None
+    } else {
+      Some((student.name, student.age))
+    }
+  }
+}
+
+val student = new Student("Jon", 21)
+
+val result = student match {
+  case Student("Jon", 21) => "Jon, 21"
+  case _ => "something else"
+}
+
+println(result) // Jon, 21
+```
+
+- 第二种实现对象匹配的方式是样例类(case class).
+- `case class className`定义样例类, 会直接将打包`apply`和拆包`unapply`的方法直接定义好.
+- 样例类定义中主构造参数列表中的`val`甚至都可以省略, 如果是`var`的话则不能省略, 最好加上的感觉, 奇奇怪怪的各种边角简化.
+
+```Scala
+// case class
+case class Person(name: String, age: Int)
+
+val person = Person("Jon", 21)
+
+val result2 = person match {
+  case Person("Jon", 21) => "Jon, 21"
+  case _ => "something else"
+}
+
+println(result2) // Jon, 21
 ```
